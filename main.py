@@ -1,3 +1,7 @@
+from operator import le
+from webbrowser import get
+
+
 Board = [
     [0,0,0,0,0,0,0,0,0],
     [5,9,0,0,3,4,6,0,0],
@@ -15,13 +19,18 @@ def printBoard(Board):
 		if i % 3 == 0:
 			print(" - - - - - - - - - - - - - -")
 		
-		for n in range(len(Board[0])):
-			if n % 3 == 0:
+		for j in range(len(Board[0])):
+			if j % 3 == 0:
 				print(" | ",end="")
-			if n == 8:
-				print(Board[i][n])
+			if j == 8:
+				print(Board[i][j])
 			else:
-				print(str(Board[i][n])+" ", end="")
-
+				print(str(Board[i][j])+" ", end="")
+def GetEmpty(Board):
+	for i in range(len(Board)):
+		for j in range(len(Board[0])):
+			if Board[i][j] == 0:
+				return (i,j)
 
 printBoard(Board)
+print(GetEmpty(Board))
