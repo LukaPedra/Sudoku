@@ -1,3 +1,4 @@
+
 Board = [
     [0,0,0,0,0,0,0,0,0],
     [5,9,0,0,3,4,6,0,0],
@@ -10,6 +11,23 @@ Board = [
     [0,5,0,0,7,0,0,0,0]
 ]
 
+def Solve(board):
+	find = GetEmpty(board)
+	if not find:
+		return True
+	else:
+		row, col = find
+	for i in range(1,10):
+		if valid(board,i, (row,col)):
+			board[row][col] = i
+
+			if Solve(board):
+				return True
+
+			board[row][col] = 0
+	return False
+
+
 def valid(Board, n, pos):
 	#row
 	for i in range(len(Board[0])):
@@ -18,14 +36,14 @@ def valid(Board, n, pos):
 	
 	#column
 	for i in range(len(Board)):
-		if Board[i][pos[1]] == n and pos[1] != i:
+		if Board[i][pos[1]] == n and pos[0] != i:
 			return False
 	#Check box
 	Caixa_x = pos[1] // 3
 	Caixa_y = pos[0] // 3
 
-	for i in range(Caixa_x* 3, Caixa_x*3 +3):
-		for j in range(Caixa_y* 3, Caixa_y*3 +3):
+	for i in range(Caixa_y* 3, Caixa_y*3 +3):
+		for j in range(Caixa_x* 3, Caixa_x*3 +3):
 			if Board[i][j] == n and (i,j) != pos:
 				return False
 	return True
@@ -48,6 +66,9 @@ def GetEmpty(Board):
 		for j in range(len(Board[0])):
 			if Board[i][j] == 0:
 				return (i,j)
+	return None
 
 printBoard(Board)
-print(GetEmpty(Board))
+Solve(Board)
+print("\n_____________________________________________________\n")
+printBoard(Board)
